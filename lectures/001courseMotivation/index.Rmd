@@ -48,6 +48,14 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
+## About me
+
+<img class=center src=assets/img/usguys.jpg height='80%' />
+
+
+---
+
+
 ## Why applied statistics?
 
 <img class=center src=assets/img/deluge.jpeg height='80%' />
