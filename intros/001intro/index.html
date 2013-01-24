@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>January 29 intro</title>
+  <meta charset="utf-8">
+  <meta name="description" content="January 29 intro">
+  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/zenburn.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href = "assets/css/custom.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <hgroup class="auto-fadein">
+        <h1>January 29 intro</h1>
+        <h2>JHSPH Biostatistics 753 - Advanced Methods/Applied Statistics</h2>
+        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>January 29</h2>
+  </hgroup>
+  <article>
+    <p><strong>Announcements</strong></p>
+
+<p><strong>Agenda</strong></p>
+
+<ol>
+<li><p>Talk about pre-assignment</p></li>
+<li><p>Structure of a data analysis</p></li>
+<li><p>In class-exercise on pre-assignment</p></li>
+<li><p>Paramters and randomness (unlikely today)</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Pro-tip: Reproducible research</h2>
+  </hgroup>
+  <article>
+    <p>Reproducible research is a hot topic, in part because a couple of high-profile papers that were disastrously non-reproducible (see <a href="http://arxiv.org/pdf/1010.1092.pdf">&quot;Deriving chemosensitivity from cell lines: Forensic bioinformatics and reproducible research in
+high-throughput biology&quot;</a>).I also have pretty strong feelings about the subject (<a href="http://simplystatistics.org/2013/01/23/statisticians-and-computer-scientists-if-there-is-no-code-there-is-no-paper/">&quot;Statisticians and computer scientists - if there is no code, there is no paper&quot;</a>) When you write code for statistical analysis try to make sure that:</p>
+
+<ol>
+<li><p>It is neat and well-commented - liberal and specific comments are your friend</p></li>
+<li><p>That it can be run by someone other than you, to produce the same results that you report. </p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Paper of the day</h2>
+  </hgroup>
+  <article>
+    <p><a href="http://arxiv.org/abs/1301.3718">&quot;Empirical estimates suggest most published medical research is true&quot;</a> </p>
+
+<p>See also</p>
+
+<p>1.<a href="http://www.technologyreview.com/view/510126/the-statistical-puzzle-over-how-much-biomedical-research-is-wrong/">MIT Tech Review</a> </p>
+
+<p>2.<a href="http://andrewgelman.com/2013/01/i-dont-believe-the-paper-empirical-estimates-suggest-most-published-medical-research-is-true-that-is-the-claim-may-very-well-be-true-but-im-not-at-all-convinced-by-the-analysis-being-used/">Andrew Gelman</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/carrie.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/fortin1.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/fortin2.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/fortin3.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/emily1.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/emily2.png height='80%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/vivek.png height='60%'/></p>
+
+<p>Attached is a daily time series of your family&#39;s total spending activities for the last few months. It appears that you and your wife spend money in a punctuated fashion; at least three distinct peaks of major expenditures are visible, corresponding (roughly) with the holidays: 10/29 (~Halloween), 11/26 (~Thanksgiving), 12/31-1/02 (~New Years) ; in at least two occasions these expenses are for airfare.  </p>
+
+<hr>
+
+<h2>What you know about me</h2>
+
+<ul>
+<li>You traveled to London. Departed on the 9/27/2012 and returned on the
+10/02/2012.</li>
+<li>You have a Daily Grind card</li>
+<li>You are subscribed to Net
+ix</li>
+<li>You have Kindle</li>
+<li>You like Indian food</li>
+<li>You spent Christmas and New Year in Maryland, but early this year the family spent 5 days in Florida.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Card 4 is only used for shopping at Target</li>
+<li>Card 1 is frequently used in Baltimore (could be Jeff&#39;s)</li>
+<li>Card 2 is seldom used in Baltimore (could be Jeff&#39;s wife&#39;s)</li>
+<li>Card 3 is rarely used</li>
+</ul>
+
+<p>The Wholefoods shopping is always done by Card 2. (which means Jeff&#39;s wife is always doing grocery shopping, or they are doing it together while his wife always pay for that.)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/john.png height='60%'/></p>
+
+<ul>
+<li>There seem to be high spikes in the amount of spending (over $500) in Late October, Late November, and Late December.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/john2.png height='60%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>It seems that you may use Card 1 and 2 for large amount of purchase, but not card 3
+and 4. Then, I make scatter plot to investigate more details: you frequently use Card 1 and 2, the
+pattern of Card 1,2 are similar; however, Card 3 and 4 are seldom used.</li>
+<li>So, Card 4 must be the membership visa card of TARGET, but I have no idea of what is Card
+3 though.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=assets/img/yuting.png height='60%'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p>1, I guess the first card is yours, and the second card is your wife&#39;s card.</p>
+
+<p>2, I guess your home address is near the cross of West street and Taylor Ave, Spa Rd, in Annapolis</p>
+
+<p>3, I guess you made several donations with total amount $4300 on one day 1/2/13.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p>. Home Location</p>
+
+<p>Apparently your family live in Annapolis. I was trying to figure out the approximate location of your home, but I stuck and didn&#39;t have more time to do this.</p>
+
+<ol>
+<li>Family Status</li>
+</ol>
+
+<p>According to what you said during Lecture 1, there are three people in your family. You, your wife and a baby. The fact that you have a baby can also be verified based on multiple transactions made at CARTER&#39;s.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p>There are four credit cards in the statement. Obviously Card No. 1 belongs to you (based on a lot of weekdays&#39; transactions in Baltimore) and Card No. 2 belongs to your wife. Card No. 3 is used only at iTunes and EZPass refill. Card No. 4 is a Target Redcard, which is used by both you and your wife. The card was used at United States while you were away in London and used in Seattle while your wife was back in Maryland.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <p>Your wife works at the Naval&#39;s Academy, which could be easily verified by the fact that Card No. 2 is associated with a lot of transactions of food (i.e. bagels) at that location.</p>
+
+<ol>
+<li>Transaction Summaries</li>
+</ol>
+
+<p>Apparently you love Amazon.com! You buy a lot of things at Amazon.com and you also use the Amazon Web Service. What interests me the most is, how are you feeling about Ting&#39;s service? Signal? Voice call quality?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>What you know about me</h2>
+  </hgroup>
+  <article>
+    <ol>
+<li>Traveling History</li>
+</ol>
+
+<p>You traveled to several places during this period. The first one was London, which was between Sep. 26 and Oct. 2 (based on Parking at BWI, you paid $132 for 6 days at the hourly garage). The second one was Houston (via Charlotte) between Nov. 16 and Nov. 18. During Thanksgiving, you basically stayed home and made a big travel plan for the New Year. After the Christmas, you first flew to Seattle on Dec. 25. You took the Target credit card with you. Based on the parking at BWI, you came back on Dec. 29, which was $110 for 5 days. But it is unclear to me why there were transactions in Seattle posed on Monday. It may be due to the delay in the weekend. After Seattle, you flew to Panama City in Florida for another holiday possibly on Jan 1. You stayed for about 5 days and came back on Jan 6.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Lots of interesting description</li>
+<li>A few predictions/inferences</li>
+<li>How confident are you? - that&#39;s statistics/data analysis</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<script src='libraries/widgets/bootstrap/js/bootstrap.min.js'></script>
+<script>  
+$(function (){ 
+  $("#example").popover(); 
+  $("[rel='tooltip']").tooltip(); 
+});  
+</script>  
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>
