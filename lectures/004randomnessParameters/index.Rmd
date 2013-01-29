@@ -1,0 +1,440 @@
+---
+title       : Randomness and parameters 
+subtitle    : 
+author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+job         : Johns Hopkins Bloomberg School of Public Health
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : zenburn   # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+```{r setup, cache = TRUE, echo = F, message = F, warning = F, tidy = F}
+# make this an external chunk that can be included in any file
+options(width = 100)
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache = F, cache.path = '.cache/', fig.path = 'fig/')
+
+options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+knit_hooks$set(plot = knitr:::hook_plot_html)
+```
+
+## What is Randomness?
+
+You may be used to thinking of the stochastic parts of random 
+variables as ‘just chance’. In very select situations this is fine; 
+radioactive decay really does appear to be ‘just chance’ (but ask Caffo about this...)
+
+However, this is not what ‘random variables’ actually represent 
+in most applications, and it can be a misleading simpliﬁcation to 
+think that it’s ‘just chance’ that prevents us knowing the truth. 
+
+
+---
+
+## What is Randomness?
+
+
+<img class=center src=assets/img/ohm.png height='50%'/>
+
+
+Recall high school physics. For two resistors ``in series'', the resistances are added to give a total (Y , measured in Ohms, $\Omega$) which we record without error. We know the number of gold (X) and silver stripes (Z). We also know that each resistance is $\propto$ number of stripes.
+__Q__: How much resistance do stripes of each color correspond to? 
+
+
+
+---
+
+## What is Randomness?
+
+Thought experiment 1:  Note that in this situation there is no measurement error or noise, and nothing random is going on. What is the value of each gold stripe?
+
+<img class=center src=assets/img/ohmplot1.png height='50%'/>
+
+---
+
+## What is randomness?
+
+What is the difference between X and X+1? 
+
+<img class=center src=assets/img/ohmplot2.png height='50%'/>
+
+---
+
+## What is randomness?
+
+What is the difference between X and X+1? 
+
+
+<img class=center src=assets/img/ohmplot3.png height='50%'/>
+
+---
+
+
+## Thought Experiment Math
+
+Here's the truth; 
+
+$$ Y_{n\times1} =\gamma_0 1_{n\times1} + \gamma_1 X_{n\times1} + \gamma_2 Z_{n\times1}$$
+
+where $n$ is evenly distributed between all $X,Z$ combinations.But not knowing $Z$, we will fit the relationship $$ Y \approx \beta_0 1 + \beta_1 X$$ Here ``fit'' means that we will find $e$  to $1$ and $X$ such that
+
+$$Y = \beta_0 1 + \beta_1 X + e$$
+
+By linear algebra (i.e. projection onto $1$ and $X$) we must have 
+
+$$ e  =  Y - \left(\frac{\bY \cdot \bone}{n} - \frac{\bY\cdot(\bX - \bar{\bX}\bone)}{(\bX-\bar{\bX}\bone) \cdot(\bX-\bar{\bX}\bone) }\bX\right)\bone - \left(\frac{\bY\cdot(\bX - \bar{\bX}\bone)}{(\bX-\bar{\bX}\bone) \cdot(\bX-\bar{\bX}\bone) }\right)\bX$$
+%\end{small}
+%where $\bar{\bX} = \bX \cdot \bone / (\bone \cdot \bone) = \bX \cdot \bone/n$, i.e. the mean of $\bX$  - a scalar. 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment Math?$^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%The fitted line, with $\be$ \\
+%\vspace{0.1in}
+%Note the orthogonality to $\bone$ and $\bX$\\
+%\vspace{0.1in}
+%What's the slope of the line? 
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot4.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment Math?$^\dagger$}
+%What to remember (in ``real'' experiments too);
+%
+%\begin{itemize}
+%\item The ``errors'' {\bf represent} everything that we didn't measure. 
+%\item {\bf Nothing} is random here - we just have imperfect information
+%\item If you are {\it never} going to know $Z$ (or can't assume you know 
+%a lot about it) this sort of ``marginal'' relationship is all that {\it can} be learned
+%\end{itemize}
+%
+%What you {\it didn't} measure can't be ignored...
+%
+%}
+%
+%
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%A different ``design'' \\
+%\vspace{0.1in}
+%What is going on?\\
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot5.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%Plotting $Y$ against $X$;\\
+%
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot6.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%Plotting $Y$ against $X$;\\
+%\vspace{0.1in}
+%... and not knowing $Z$\\
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot7.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%Here's the fitted line;\\
+%\vspace{0.1in}
+%... what's the slope?\\
+%\vspace{0.1in}
+%What would you conclude? 
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot8.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%Here's the truth, for both $\bY$ and $\bZ$;
+%\begin{eqnarray*}
+%\bY &=& \gamma_0 \bone + \gamma_1 \bX + \gamma_2 \bZ\\
+%\bZ &=& \theta_0 \bone + \theta_1 \bX + \beps
+%\end{eqnarray*}
+%where $\beps$ is orthongal to $\bone$, $\bX$. Therefore,
+%\begin{eqnarray*}
+%\bY &=& \gamma_0 + \gamma_1 \bX + \gamma_2 (\theta_0 + \theta_1 \bX + \beps)\\
+%&=& (\gamma_0 + \gamma_2\theta_0) \bone + (\gamma_1 + \gamma_2\theta_1)\bX + \gamma_2\beps\\
+%&\equiv& \beta_0 \bone + \beta_1 \bX + \be
+%\end{eqnarray*}
+%and we get $\beta_1 = \gamma_1$ if (and only if) there's ``nothing going on'' between $Z$ and $X$. The change we saw
+%in the $Y-X$ slope (from \#1 to \#2) follows exactly this pattern. 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#2 $^\dagger$}
+%\begin{itemize}
+%\item The marginal slope $\beta_1$ is not the ``wrong'' answer, but it may not be the same as $\gamma_1$. 
+%\item Which do you wnat? The $Y-Z$ slope if $Z$ is fixed or if $Z$ varies with $X$ in the same way it did in your experiment? 
+%\item No one needs to know that $Y$ is being measured for $\beta_1 \neq \gamma_1$ to occur. 
+%\item The ``observed''  $\be$ are actually $\gamma_2 \beps$ here, so the ``noise'' doesn't simply reflect the $Z-X$ relationship {\it alone} 
+%\end{itemize}
+%}
+%
+%
+%\frame{
+%\frametitle{Thought Experiment \#3 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%A final ``design''\\
+%\vspace{0.1in}
+%... a real mess!\\
+%\vspace{0.1in}
+%
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot9.png}
+%\end{columns} 
+%}
+%
+%\frame{
+%\frametitle{Thought Experiment \#3 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%A final ``design''\\
+%\vspace{0.1in}
+%... plotting $Y$ vs. $X$\\
+%\vspace{0.1in}
+%
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot10.png}
+%\end{columns} 
+%}
+%
+%
+%\frame{
+%\frametitle{Thought Experiment \#3 $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%A final ``design''\\
+%\vspace{0.1in}
+%... plotting $Y$ vs. $X$\\
+%\vspace{0.1in}
+%(Starts to look like real data!)
+%
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{ohmplot11.png}
+%\end{columns} 
+%}
+%
+%
+%
+%\frame{
+%\frametitle{Thought Experiment \#3 $^\dagger$}
+%\begin{itemize}
+%\item $Z$ and $X$ were orthogonal - what happened to the slope?
+%\item {\it But} the variability of $Z$ depended on $X$. What happened to $\be$, compared to \#1 and \# 2?
+%\vspace{0.1in}
+%We can extend all these arguments to $\bX_{n\times p }$ and $\bZ_{n \times q}$ - see Jon Wakefield's book for more. Reality
+%also tends to have $>$ 1 ``un-pretty'' phenomena per situation!\\
+%\vspace{0.1in}
+%In general, the nature of what we call ``randomness'' depends 
+%{\bf heavily} on what is going on unobserved. It’s only in extremely 
+%simple situations\footnote{...which probably don't require a PhD statistician} that unobserved {\it patterns} can be dismissed 
+%without careful thought. In {\bf some} complex situations they {\it can} 
+%be dismissed, but only after careful thought. 
+%
+%\end{itemize}
+%}
+%
+%
+%\frame{
+%\frametitle{Reality Check $^\dagger$}
+%\begin{columns}[c]
+%\column{2.2in} 
+%This is a realistically- 
+%complex ``system'' you might 
+%see in practice \\
+%\vspace{0.1in}
+%Your ``X'' might be time (developmental) and
+%``Y'' expression of a particular gene \\
+%\vspace{0.1in} 
+%Knowing the Y-X relationship is clearly useful, but 
+%pretending that all the Z -X 
+%relationships are ‘pretty’ is 
+%na\"ive (at best) 
+%
+%
+%\column{2.4in} 
+%\includegraphics[width=2.4in]{complications.png}
+%\end{columns} 
+%}
+%
+%
+%\frame{
+%\frametitle{Reality Check $^\dagger$}
+%With reasonable sample size $n$, inference (i.e. learning about 
+%$\beta$) is possible without making strong assumptions about the 
+%distribution of Y , and how it varies with X. It seems prudent to 
+%avoid these assumptions – as ``modern'' approaches do. 
+%\begin{itemize}
+%\item If you have good a priori reasons to believe them, distributional assumptions may be okay – and may help substantially 
+%\item For small n this may be the only viable approach (other than 
+%quitting) 
+%\item For tasks other than inference (e.g. prediction) assumptions may be needed.
+%\item Checking distributional assumptions after you've used them 
+%doesn’t actually work very well. Asking the data ``was I right 
+%to trust you just now'' ? or ``did you behave in the way I hope 
+%you did?'' is not reliable, in general. 
+%\end{itemize}
+%}
+%
+%\frame{
+%\frametitle{Reality Check $^\dagger$}
+%If you have to start making distributional assumptions:
+%\begin{itemize}
+%\item Adding lots of little effects $\rightarrow$ Normal distributions 
+%\item Binary events $\rightarrow$ Bernoulli, and Binomial 
+%\item Counting lots of rare events $\rightarrow$ Poisson 
+%\item Continual (small) hazard of an event $\rightarrow$ Weibull 
+%\end{itemize}
+%... but note these are rather stylized, minor modiﬁcations ‘break’ 
+%them, e.g. different event rates 
+%$\rightarrow$ overdispersed Poisson. \\
+%\vspace{0.1in}
+%However, methods which use ‘classical’ assumptions often have 
+%other interpretations. For example, using ¯ 
+%$\bar{Y}$ (the sample mean) 
+%as an estimator can be motivated with Normality, but we don't 
+%need this assumption in order to use ¯ 
+%$Y$. 
+%
+%}
+%
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%From previous courses you will be used to this kind of plot
+%\centerline{\includegraphics[height=3in,width=3in]{scatter1.png}}
+%... and also used to ``manipulating'' the sample in several ways 
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%You may have seen larger sample sizes, 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter2.png}}
+%... this sample can also be ``manipulated''
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%To define parameters, think of an {\bf infinite} ``super''-population; 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter3.png}}
+%... and consider (simple) ways to manipulate what we see;
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%The mean of X; 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter4.png}}
+%(note: requires finite moments of X to be well-defined) 
+%
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%The mean of Y ; 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter5.png}}
+%... {\it mild} regularity conditions also apply
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%The mean of Y at a given value of X 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter6.png}}
+%... only sensible if you know the given value of X (!)
+%}
+%
+%\frame{
+%\frametitle{What is a parameter?$^\dagger$}
+%Difference in mean of Y , between two values of X; 
+%\centerline{\includegraphics[height=3in,width=3in]{scatter7.png}}
+%... which is unchanged, if Y $\rightarrow$ Y + c 
+%}
+%
+%
+%\frame{
+%\frametitle{Defining parameters$^\dagger$}
+%A {\it parameter} is (formally) an operation on a super-population,
+%mapping it to a ``parameter space'' $\Theta$, such as $\mathbb{R}$, or
+%$\mathbb{R}^p$, or $\{0,1\}$.\\
+%\vspace{0.1in}
+%The parameter {\it value} (typically denoted $\beta$ or $\theta$) is the result of this
+%operation\footnote{{\it The ``true state of Nature'' is a common expression for the same thing}}.
+%\begin{itemize}
+%\item ``Inference'' means making one or more conclusions about the parameter value
+%\item These could be estimates, intervals, or binary (Yes/No) decisions
+%\item ``{\it Statistical} inference'' means drawing conclusions {\bf without} the full populations'
+%data, i.e. in the face of uncertainty. Parameter values themselves are fixed unknowns; they are
+%not ``uncertain'' or ``random'' in any stochastic sense. \\
+%\end{itemize}
+%\vspace{0.1in}
+%In previous courses, parameters may have been defined as linear operations on the superpopulation.
+%In 754, we will generalize the idea. 
+%}
+%
+%\frame{
+%\frametitle{Defining parameters$^\dagger$}
+%In this course, we will typically assume relevant parameters can 
+%be identified in this way. But in some real situations, one cannot 
+%identify $\theta$, even with an infinite sample (e.g. mean height of 
+%women, when you only have data on men) \\
+%\vspace{0.1in}
+%If your data do not permit useful inference, you could; 
+%\begin{itemize}
+%\item Switch target parameters 
+%\item Extrapolate cautiously – i.e. make assumptions 
+%\item Not do inference, but ``hypothesis-generation''
+%\item Give up 
+%\end{itemize}
+%\vspace{0.1in}
+%I will mainly disucss ``sane'' problems; this means ones we can 
+%reasonably address. Be aware {\bf not} every problem is like this... \\
+%\vspace{0.1in}
+%{\it The data may not contain the answer. The 
+%combination of some data and an aching desire 
+%for an answer does not ensure that a reasonable 
+%answer can be extracted from a given body of data }
+%-John Tukey
+%
+%}
+
