@@ -1,0 +1,726 @@
+\documentclass[12pt]{article} 
+%\usepackage[orientation=portrait,size=A4]{beamerposter}
+\usepackage{color}
+\usepackage{graphics}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bL}{\mathbf{\Lambda}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bU}{\mathbf{U}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bfac}{\mathbf{f}}
+
+\begin{document}
+
+\title{754 Assignment One}
+
+
+\begin{enumerate}
+\item Show that  if the p-values of the $m_0$ null hypotheses are independent then $\frac{V(t)}{t} = \frac{\sum_{i=1}^{m_0} 1(p_i \leq t)}{t}$ for $0 \leq t \leq 1$ is a martingale with time running backward with respect to the filtration $\mathcal{F}_t = \sigma(1\{p_i \leq s\}, t \leq s \leq 1,i=1,\ldots,m)$, in other words for $s \leq t$ we have $E[V(s)/s | \mathcal{F}_t] = V(t)/t$. 
+\item Show that the random variable $T_{\alpha}(\widehat{FDR}(t))$ is a stopping time with respect to $\mathcal{F}_t = \sigma(1\{p_i \leq s\}, t \leq s \leq 1,i=1,\ldots,m)$. 
+\item Show that the martingale $\frac{V(t)}{t}$ stopped at $T_{\alpha}(\widehat{FDR}(t))$ is bounded by $\frac{m}{\alpha}$. 
+\end{enumerate}
+
+
+
+
+%\section{Background}
+
+%
+%\frame{
+%\frametitle{Central Dogma of Molecular Biology}
+%\only<1>{\begin{center}
+%\includegraphics[height=1.3in]{centraldogma1.jpg}
+%\end{center}}
+%\only<2>{\begin{center}
+%\includegraphics[height=1.3in]{centraldogma2.jpg}
+%\end{center}}
+
+%\vspace{-0.2in}
+%\uncover<2>{
+%\begin{itemize}
+%\item \textcolor{craneblue}{Microarrays} measure the expression of thousands of genes.
+%\item Number of arrays $n$ $\ll$ number of genes $m$.
+%\item Arrays are sampled from varying biological conditions.
+%\item Example Goal: Identify genes differentially expressed across conditions. 
+%\end{itemize}
+%}
+%}
+
+%\frame{
+
+%\frametitle{A simulated microarray study.}
+%\vspace{-0.2in}
+%\begin{center}
+%\hspace{-0.2in}\includegraphics[height=3.0in]{microarray_example.pdf}
+%\end{center}
+%}
+
+%\frame{
+%\frametitle{Large Scale Multiple Testing}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Large scale multiple testing} is a standard approach for separating signal from noise in high throughput biological experiments. 
+% \end{beamercolorbox}
+% 
+% \vspace{0.2in}
+% 
+%  \setbeamercolor{box}{fg=black,bg=blue!20}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%Large scale multiple testing steps:
+%\begin{enumerate}
+%\item Form a statistic for each gene.
+%\item Rank the statistics.
+%\item Draw a cutoff.
+%\only<1>{\item Estimate an error measure.}
+%\only<2>{\item \textcolor{red}{Estimate an error measure.}}
+%\end{enumerate}
+% \end{beamercolorbox}
+% 
+% \vspace{0.1in}
+%\uncover<2>{Benjamini \& Hochberg (1995), Storey (2002), Storey \& Tibshirani (2003), Dudoit {\it et al.} (2003)}
+%}
+
+%\frame{
+%\begin{center}
+%\only<1>{\frametitle{A simulated microarray study.}}
+%\only<2>{\frametitle{Primary variable differential expression.}}
+%\only<3>{\frametitle{Differential expression from some other source.}}
+%\vspace{-0.2in}
+%\only<1>{\hspace{-0.2in}\includegraphics[height=3.0in]{microarray_example.pdf}}
+%\only<2>{\hspace{-0.2in}\includegraphics[height=3.0in]{diffex_highlight.pdf}}
+%\only<3>{\hspace{-0.2in}\includegraphics[height=3.0in]{het_highlight.pdf}}
+%\end{center}
+%}
+
+%
+%\frame{
+%\frametitle{Expression Heterogeneity (EH)}
+%\vspace{-0.2in}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Expression heterogeneity} is a consistent pattern of variation across genes.
+% \end{beamercolorbox}
+
+%\begin{itemize}
+%\item Sources of EH are often unknown or unmeasured, or incapable of being tractably modeled.
+%\item EH affects nearly every microarray study. 
+%\end{itemize}
+% }
+% 
+%\frame{
+%\frametitle{Sources of expression heterogeneity}
+%\vspace{0.1in}
+%\hspace{0.3in} Environment \hspace{0.5in} Genetics \hspace{0.7in} Demograhics\\
+%\vspace{-0.15in}
+% \begin{center}
+%\hspace{-0.15in}\includegraphics[height=2.7in]{ehsources.jpg}
+% \end{center}
+% }
+% 
+% \frame{
+%\frametitle{EH affects nearly every expression study.}
+% \begin{center}
+%\includegraphics[height=3.1in]{pervasive.jpg}
+% \end{center}
+%}
+
+%\frame{
+%\frametitle{Assessing the impact of expression heterogeneity}
+%\vspace{-0.2in}
+%\begin{itemize}
+%\item 1,000 simulated studies.
+%\item 1,000 genes per study. 
+%\item Genes 1-300 differentially expressed.
+%\item Genes 201-700 affected by a factor causing EH. 
+%\item Unmodeled factor is randomized.  
+%\end{itemize}
+%}
+
+%\frame{
+%\only<1>{\frametitle{$P$-values for nine studies...}}
+%\only<2>{ \frametitle{...tail is not flat.}}
+% \begin{center}
+%\only<1>{\includegraphics[height=2.8in]{un_tot1.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{un_tot2.jpg}}
+% \end{center}
+%}
+
+%\frame{
+%\only<1>{\frametitle{Null $P$-values for the same studies...}}
+%\only<2>{\frametitle{ ...primary variable and unmodeled factor correlated...}}
+%\only<3>{ \frametitle{...primary variable and unmodeled factor uncorrelated.}}
+% \begin{center}
+%\only<1>{\includegraphics[height=2.8in]{un_null1.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{un_null2.jpg}}
+%\only<3>{\includegraphics[height=2.8in]{un_null3.jpg}}
+% \end{center}
+%}
+
+%\frame{
+%\frametitle{ $P$-values for a single null gene over multiple studies.} 
+%\vspace{-0.4in}
+% \begin{center}
+%\includegraphics[height=3.3in]{single_null.pdf}
+% \end{center}
+%}
+
+%
+
+% \frame{
+% \frametitle{Paradox?}
+%\begin{itemize}
+%\item Randomization works when investigating a single variable in many repeated experiments.
+%\item Randomization does not always work for investigating many variables at once, even when considering lots of repeated experiments.
+%\item In multiple testing, the set of $P$-values are usually considered to be coming from independent experiments, whereas in a microarray there is a single experiment with a single randomization. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Dependence in error rate estimation.}
+%\begin{itemize}
+%\item Dependence caused by EH can bias error rate estimates.  
+%\item This problem was recognized by developers of false discovery rate estimation (Storey 2002, Storey and Tibshirani 2003, Benjamini and Yekutieli 2001).
+%\item FDR estimation under dependence is still a hot topic (Owen 2004,  Qiu {\it et al.} 2005, Pawitan {\it et al.} 2006, many others...)
+%\end{itemize}
+% \uncover<2>{ \textcolor{red}{But all these methods focus on error rate estimation after $P$-values have been calculated.}}
+%}
+
+%
+%\frame{
+%\frametitle{Overcoming Heterogeneity}
+%\textcolor{craneblue}{Goal}: Account for factors that cause EH in microarray studies.\\
+%\vspace{0.2in}
+%\textcolor{craneblue}{Problem}: Many factors that cause EH are unknown or unmeasured. \\
+%\vspace{0.2in}
+% \textcolor{craneblue}{Solution}: Estimate {\it signatures} of EH directly from expression data.
+%}
+% 
+
+%
+
+%\section{SVA}
+
+%\frame{
+%\frametitle{What is expression heterogeneity?}
+%\begin{itemize}
+%\item Expression heterogeneity can be thought of as some common set of factors, each with a gene specific influence.
+%\begin{center}
+%\hspace{-0.2in}\only<1>{\includegraphics[height=1in]{equation1.jpg}}
+%\hspace{-0.1in}\only<2,3>{\includegraphics[height=1in]{equation2.jpg}}
+%\end{center}
+%\uncover<3>{\item We don't need the factors themselves, we only need their {\it signature} in the expression data.}
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Data and notation}
+%For $m$ genes on $n$ arrays:\\
+%\vspace{0.2in}
+%$y_{ij}$ - expression value for the $i^{th}$ gene on the $j^{th}$ array. \\
+%$x_{j}$ - the variable describing biological condition for array $j$. \\
+%$f_{kj}$ - the value of unmodeled factor $k$ for array $j$. \\
+%$e_{ij}$ - the gene specific noise for the $i^{th}$ gene on the $j^{th}$ array.\\
+%}
+
+%\frame{
+%\frametitle{Basic model for expression}
+%$$ \mathbf{Y} = \mathbf{\beta} \mathbf{x}^T + \mathbf{E}$$\\
+%\vspace{0.2in}
+%$\bY = m \times n$ matrix of expression values.\\
+%$\beta = m \times 1$ vector of effects.\\
+%$\bx = n \times 1$ vector of group indicators.\\
+%$\bE = m \times n$ matrix of noise.\\
+%}
+
+%\frame{
+%\frametitle{Model for expression including heterogeneity}
+%$$ \mathbf{Y} = \mathbf{\beta} \mathbf{x}^T + \mathbf{\Lambda} \mathbf{F} + \mathbf{U}$$\\
+%\vspace{0.2in}
+%$\bY = m \times n$ matrix of expression values.\\
+%$\beta = m \times 1$ vector of effects.\\
+%$\bx = n \times 1$ vector of group indicators.\\
+%$\bL = m \times p$ matrix of  unmodeled factor coefficients.\\
+%$\bF= p \times n$ matrix of unmodeled factors.\\
+%$\bU = m \times n$ matrix of gene specific noise.\\
+%}
+
+%\frame{
+%\frametitle{Advantages of this model}
+
+%\begin{itemize}
+%\item Estimating a general covariance matrix requires estimating $\frac{(m+1)m}{2}$ parameters.
+%\item Under the model framework, we only need to estimate $(p+1)m$ parameters. 
+%\item Typically $p \ll n$ and $n \ll m$. 
+%\item NOTE: Only need to know $\bL\bF$ so we can equivalently define $\bF$ in the most statistically tractable way. 
+%\end{itemize}
+
+%}
+
+%\frame{
+%\frametitle{SVA Algorithm}
+%\begin{itemize}
+%\item[Step 1-]  Determine number of orthogonal factors needed to capture EH (i.e., what is the dimension of the column space spanned by F).
+%\item[Step 2-]  Identify the subset of genes affected by each orthogonal factor.
+%\item[Step 3-]  Estimate surrogate variable based on the original expression data of the relevant subset of genes.   
+%\item[Step 4-]  Include estimated surrogate variables as covariates in a model of association between $\bY$ and $\bx$. 
+%\end{itemize}
+%}
+
+%
+%\frame{
+%\frametitle{Step 1 -- Determine number and direction of factors.}
+%\begin{itemize}
+%\item Calculate the residual matrix:
+%$$ \bR =(\bI - \bx(\bx^T\bx)^{-1}\bx^T)\bY^T$$
+%\item Calculate the eigengenes (right singular vectors) $\bV$ of $\bR$ 
+%$$ \bR = \bU \bD \bV^T$$
+%\item Estimate the significant residual eigengenes $v_1,\ldots,v_K$ by permutation (Hastie, Tibshirani and Friedman, 2001).
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Step 2 -- Identify subset of genes for each factor.}
+%\begin{itemize}
+%\item For each significant residual eigengene $\bv_k$ calculate a $P$-value measuring its association with each gene's expression. 
+%\item Estimate the proportion of true null hypotheses among these tests $\widehat{\pi}_0$ (Storey 2002). 
+%\item Identify the $(1-\widehat{\pi}_0)$ most highly associated genes for each residual eigengene. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Step 3 -- Estimate surrogate variables.}
+%\begin{itemize}
+%\item For the residual eigengene $\bv_k$ form the subset expression matrix $\bY_k$ consisting of the expression for the $(1-\widehat{\pi}_0)$ most significant genes. 
+%\item Estimate surrogate variable $\bs_k$ as the eigengene of $\bY_k$ most correlated with $\bv_k$. 
+%\end{itemize}
+%}
+
+%
+%\frame{
+%\only<1>{ \frametitle{Before SVA tail is not flat...}}
+%\only<2>{\frametitle{ ...after SVA tail is flat.}}
+% \begin{center}
+
+%\only<1>{\includegraphics[height=2.8in]{un_tot2.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{ad_tot1.jpg}}
+% \end{center}
+%}
+
+%\frame{
+%\only<1>{\frametitle{ Before SVA null $P$-values are not flat...}}
+%\only<2>{\frametitle{... after SVA null $P$-values are flat.}}
+% \begin{center}
+
+%\only<1>{\includegraphics[height=2.8in]{un_null_h2.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{ad_null1.jpg}}
+% \end{center}
+%}
+
+%
+
+%
+
+%\section{Results and Comparisons}
+
+%
+
+%\frame{
+%\frametitle{Effects of heterogeneity}
+%\begin{center}
+%\includegraphics[height=1.3in]{three_panel.pdf}
+%\end{center}
+%\vspace{-0.2in}
+%\begin{itemize}
+%\item 1,000 simulated studies.
+%\item 1,000 genes per study. 
+%\item Genes 1-301 differentially expressed.
+%\item Genes 201-700 affected by heterogeneity. 
+%\item Unmodeled factor is randomized. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{SVA increases reproducibility.}
+% \begin{center}
+%\hspace{-0.2in}\includegraphics[height=3.0in]{ranks.jpg}
+% \end{center}
+%}
+
+%
+
+%\frame{
+%\frametitle{SVA corrects the null distribution.}
+% \begin{center}
+%\hspace{-0.2in}\includegraphics[height=3.0in]{stablenull2.jpg}
+% \end{center}
+
+%}
+
+%\frame{
+%\frametitle{SVA increases power.}
+% \begin{center}
+%\hspace{-0.2in}\includegraphics[height=3.0in]{power_2.jpg}
+% \end{center}
+%}
+
+%\frame{
+%\frametitle{SVA stabilizes FDR estimates.}
+%\vspace{-0.12in}
+%\begin{center}
+%\includegraphics[height=3.2in]{pi02.jpg}
+%\end{center}
+%}
+
+%\frame{
+%\frametitle{Genetics of Gene Expression}
+%\begin{itemize}
+%\item One source of EH is genetic variation that has large-scale ``trans'' effects on expression.
+%\item Brem {\it et al.} (2002) observed gene expression on varying genetic backgrounds.
+%\item Several loci have widespread effects on expression.
+%\item Proof of concept: leave out genetic information -- see if EH is captured. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Brem {\it et al.} linkage analysis.}
+%\vspace{-0.13in}
+% \begin{center}
+%\hspace{-0.1in}\includegraphics[height=3.2in]{gg1_2.jpg}
+% \end{center}
+%}
+
+%\frame{
+%\frametitle{{\it Cis}-linkage signal}
+%\vspace{-0.13in}
+% \begin{center}
+%\hspace{-0.1in}\includegraphics[height=3.2in]{gg2_2.jpg}
+% \end{center}
+%}
+%\frame{
+%\frametitle{{\it Trans}-linkage signal = heterogeneity.}
+%\vspace{-0.13in}
+% \begin{center}
+%\hspace{-0.1in}\includegraphics[height=3.2in]{gg3_2.jpg}
+% \end{center}
+%}
+
+%
+%\frame{
+%\frametitle{SVA removes {\it trans}-effects}
+%\vspace{-0.13in}
+% \begin{center}
+%\hspace{-0.1in}\includegraphics[height=3.2in]{gg4_2.jpg}
+% \end{center}
+%}
+
+%
+%\frame{
+%\frametitle{Previous Work}
+%\begin{itemize}
+%\item Addressing heterogeneity:
+%\begin{itemize}
+%\item Genomic control (Devlin and Roeder 1999).
+%\item Population structure tests (Pritchard and Rosenberg 1999).
+%\item Regression on eigengenes (Price {\it et al.} 2006).
+%\end{itemize}
+%\vspace{0.1in}
+%\item Addressing dependence in multiple testing: 
+%\begin{itemize}
+%\item Efron's empirical null (Efron 2004).
+%\end{itemize}
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Regression on Eigengenes Algorithms}
+%\begin{itemize}
+
+%\item Algorithm 1
+%\begin{itemize}
+%\item Calculate eigengenes of the expression matrix. 
+%\item Remove eigengene most correlated with the primary variable. 
+%\item Include other significant eigengenes as surrogate variables. 
+%\end{itemize}
+
+%\item Algorithm 2
+%\begin{itemize}
+%\item Regress out the effect of the primary variable from the expression matrix. 
+%\item Calculate eigengenes of the residual matrix. 
+%\item Include significant eigengenes as surrogate variables. 
+%\end{itemize}
+
+%\end{itemize}
+%}
+
+%
+
+%\frame{
+%\only<1>{\frametitle{Unadjusted null $P$-values...}}
+%\only<2>{\frametitle{...null $P$-values after Algorithm 1...}}
+%\only<3>{\frametitle{...null $P$-values after Algorithm 2...}}
+%\only<4>{\frametitle{...null $P$-values after SVA.}}
+% \begin{center}
+% \only<1>{\includegraphics[height=2.8in]{un_null_h2.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{svd1_null.jpg}}
+%\only<3>{\includegraphics[height=2.8in]{svd2_null.jpg}}
+%\only<4>{\includegraphics[height=2.8in]{ad_null1.jpg}}
+% \end{center}
+%}
+
+%
+
+%\frame{
+%\frametitle{Empirical Null (Efron 2004)}
+%\vspace{-0.1in}
+%\begin{center}
+%\only<1>{\includegraphics[height=3.3in]{efron1_2.jpg}}
+%\only<2>{\includegraphics[height=3.3in]{efron2_2.jpg}}
+%\end{center}
+%}
+
+%\frame{
+%\only<1>{\frametitle{Unadjusted null $P$-values...}}
+%\only<2>{\frametitle{...null $P$-values with empirical null.}}
+% \begin{center}
+% \only<1>{\includegraphics[height=2.8in]{un_null_h2.jpg}}
+%\only<2>{\includegraphics[height=2.8in]{efr_pvalue2.jpg}}
+% \end{center}
+%}
+
+%
+
+%
+%\section{Theorems/Conjectures}
+
+%\frame{
+%\frametitle{Theorems and Conjectures}
+%\begin{itemize}
+%\item \textcolor{craneblue}{Theorem:} Almost sure convergence of unsupervised SVA algorithm. 
+%\item \textcolor{craneblue}{Theorem:} Almost sure convergence of SVA algorithm when primary variable and unmodeled factors are orthogonal. 
+%\item \textcolor{craneblue}{Conjecture:} Almost sure convergence of SVA algorithm when primary variable and unmodeled factors may be correlated. 
+%\item \textcolor{craneblue}{Theorem:} Simultaneously conservative consistent estimation of $Q$-values from SVA algorithm. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Important note on factor representation}
+%\begin{itemize}
+%\item Recall we do not need to estimate $\bF$, only $\bL\bF$.
+%\item We can choose an $\bF$ that is tractable for calculation provided it spans the same column space. 
+%\item For these theorems, choose $\bF$ such that the singular value decomposition of $\bL\bF$ is $\bU\bD\bF^T$. 
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{SVA valid with no primary variable}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Theorem:} Suppose the expression matrix, $\bY$, can be written as: 
+%\vspace{-0.15in}$$\bY = \bL \bF + \bE$$\\ \vspace{-0.15in}
+%Then: \\
+%$\bfac_k$ = $k^{th}$ eigengene of $\bL\bF$.\\
+%$\widehat{\bfac}_k$ = $k^{th}$ eigengene of $\bY$.\\
+%$d_k$ = $k^{th}$ singular value of  $\bL\bF$.\\
+%$\widehat{d}_k$ = $k^{th}$ singular value of $\bY$.\\
+%\vspace{0.05in}
+%Then, 
+%\begin{enumerate}
+%\item $\widehat{\bfac}_k \rightarrow \bfac_k$ almost surely,
+%\item $\widehat{d}_k \rightarrow d_k$ almost surely,
+%\end{enumerate}
+%if 2 conditions hold.
+% \end{beamercolorbox}
+% \vspace{0.05in}
+% }
+% 
+% \frame{
+%  \setbeamercolor{box}{fg=black,bg=blue!20}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%Conditions:
+%\begin{enumerate}
+%\item $e_{ij} \sim (0,\sigma_i^2)$ where $\displaystyle \sum_{i=1}^m \frac{\sigma_i^2}{i^2}$ converges.
+%\item $\displaystyle \frac{1}{m} \sum_{i=1}^m \lambda_{ik} \rightarrow l_k, 0 < l_k < \infty $ almost surely as $m \rightarrow \infty$. 
+%\end{enumerate}
+% \end{beamercolorbox}
+%}
+
+%
+%%\frame{
+%%\frametitle{SVA algorithm with uncorrelated factors}
+
+%% \setbeamercolor{box}{fg=black,bg=blue!20}
+%%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%%\textcolor{craneblue}Suppose the expression matrix, $\bY$, can be written as: $$\bY = \mathbf{\beta} \bx^T + \bL \bF +  \bE$$. \\
+%%\vspace{-0.1in}
+%%{\bf Algorithm 1:}\\
+%% \begin{enumerate}
+%% \item Regress out main effect from the expression matrix $ \bR = (\bI - \bx(\bx^T\bx)^{-1}\bx^T)\bY^T$.
+%%\item Calculate eigengenes of the residual matrix $\bR = \bU \bD \hat{\bF}^{T}$.
+%%\item Fit the model $\displaystyle \bY = \beta\bx^T + \bL\hat{\bF}_{\hat{K}}^T + \bE$ and perform inference on the $\beta$ using a standard test. 
+%%\end{enumerate}
+%% \end{beamercolorbox}
+%%}
+
+%\frame{
+%\frametitle{SVA valid when factors are uncorrelated.}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Theorem}: Suppose the expression matrix, $\bY$, can be written as: \begin{equation*}\bY = \mathbf{\beta} \bx^T + \bL \bF +  \bE \end{equation*} where the rows of $\bF$ are orthogonal to $\bx$ (i.e., $\bF \bx = \mathbf{0})$. Let\\
+%\vspace{0.15in}
+% $\bP$ = vector of $P$-values from a linear hypothesis test under the true model. \\
+% $\widehat{\bP}$ = vector of $P$-values from a linear hypothesis test under Algorithm 1. \\
+%\vspace{0.2in}
+%If the conditions from Theorem 1 hold, $\widehat{\bP} \rightarrow \bP$ almost surely as $m \rightarrow \infty$. 
+%\end{beamercolorbox}
+%}
+
+%
+%\frame{
+%\frametitle{General conditions for SVA to work}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Conjecture}: Suppose the expression matrix, $\bY$, can be written as: \begin{equation*}\bY = \mathbf{\beta} \bx^T + \bL \bF +  \bE \end{equation*}
+%\vspace{-0.1in}
+% Let:\\
+%\vspace{0.2in}
+% $\bP$ = vector of $P$-values from a linear hypothesis test under the true model. \\
+% $\widehat{\bP}$ = vector of $P$-values from a linear hypothesis test after SVA. \\
+%\vspace{0.2in}
+%Provided the conditions of Theorem 1 hold (as well as some additional conditions) $\widehat{\bP} \rightarrow \tilde{\bP} \geq \bP$ almost surely as $m \rightarrow \infty$. 
+%\end{beamercolorbox}
+%}
+
+%\frame{
+%\frametitle{Conservative Consistency of $Q$-values}
+%Suppose:\\
+%$\bP$ = vector of $P$-values, \\
+%$Q _i= $ $Q$-value of $P_i$. \\
+%$\widehat{Q_i}$ = the $Q$-value estimate described in Storey (2002).\\ 
+%\vspace{0.1in}
+%\setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Theorem} (Storey, Talyor, Siegmund 2004): 
+%$$\displaystyle \lim_{m \rightarrow \infty} \inf_{Q_i \geq \delta}\{\widehat{Q_i} - Q_i\} \geq 0$$
+
+%Provided 4 conditions hold. 
+% \end{beamercolorbox}
+
+%}
+
+%\frame{
+% \setbeamercolor{box}{fg=black,bg=blue!20}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%Conditions
+%\begin{enumerate}
+%\item $\displaystyle \lim_{m\rightarrow \infty}\frac{\#\{\rm{null} \;\; P_i \leq t\}}{m_0} =  \rm{G}_0(t)$. 
+%\vspace{0.2in}
+%\item $\displaystyle \lim_{m\rightarrow \infty}\frac{\#\{\rm{alternative} \;\;P_i \leq t\}}{m_1} =  \rm{G}_1(t)$. 
+%\vspace{0.2in}
+%\item $\displaystyle 0 < \rm{G}_0 \leq t$ for each $t \in (0,1]$.
+%\vspace{0.2in}
+%\item $\displaystyle \lim_{m\rightarrow \infty} \frac{m_0}{m} \equiv \pi_0$ exists. 
+%\end{enumerate}
+% \end{beamercolorbox}
+%}
+
+%
+%\frame{
+%\frametitle{Conservative Consistency of SVA Adjusted $Q$-values}
+% \setbeamercolor{box}{fg=black,bg=craneorange!30}
+%\begin{beamercolorbox}[rounded=true,colsep=1ex]{box}
+%\textcolor{craneblue}{Theorem}: The theorem of Storey, Taylor, and Siegmund holds for SVA adjusted $Q$-values when SVA is valid as previously described. 
+%\end{beamercolorbox}
+%}
+
+%\frame{
+%\frametitle{When is SVA appropriate?}
+%\begin{itemize}
+%\item There are certain situations when SVA will be inconsistent (e.g., every gene differentially expressed). 
+%\uncover<2,3,4> {\begin{itemize}
+%\item \textcolor{craneblue}{Determine if $\widehat{\pi}_0 \approx 0$.} 
+%\end{itemize}}
+%\vspace{0.2in}
+%\uncover<3,4>{\item There are certain situations when SVA will not account for unmodeled factor (e.g., unmodeled factor and group variable completely confounded)}
+%\uncover<4> {\begin{itemize}
+%\item  \textcolor{craneblue}{Test the correlation between each surrogate variable $\bs_k$ and the primary variable $\bx$}
+%\end{itemize}}
+%\end{itemize}
+%}
+
+%\section{Conclusions}
+
+%\frame{
+%\frametitle{Future Work}
+%\begin{itemize}
+%\item For dissertation:
+%\begin{itemize}
+%\item Extensions of SVA theory to general case. 
+%\item Investigation of theoretical operating characteristics. 
+%\item Applications to trauma, population genomics data sets. 
+%\end{itemize}
+%\item Papers:
+%\begin{itemize}
+%\item SVA algorithm with applications (almost submitted to PLoS Genetics).
+%\item Theoretical framework for SVA.
+%\item Overcoming dependence in multiple testing with SVA.
+%\item Characterizing the structure of multiple testing problems.
+%\end{itemize}
+%\end{itemize}
+%}
+
+%\frame{
+%\frametitle{Acknowledgements}
+%In addition to my advisor, John Storey, I'd also like to thank my committee members:
+%\begin{itemize}
+%\item Josh Akey
+%\item Norm Breslow
+%\item Eric Schadt
+%\item Galen Shorack
+%\end{itemize}
+%\vspace{0.2in}
+%$\ldots$ and a few friends:
+%\begin{itemize}
+%\item Storey Lab members:  Alan, Frank, Heidi, Lin, Sangsoon
+%\item Thunderstats ultimate frisbee team. 
+%\end{itemize}
+%}
+
+%
+
+%%
+%%\frame{
+%%\frametitle{Empirical Null Estimation}
+%%\begin{itemize}
+%%\item For each gene calculate a {\it P}-value $p_i$ based on the t-statistic $t_i$.
+%%\item Calculate {\it Z}-statistics based on these {\it P}-values, $z_i = \Phi^{-1}(p_i)$.
+%%\item If these were based on independent null p-values $p_i$, then $z_i \sim N(0,1)$. 
+%%\item Now plot a histogram of the {\it Z}-statistics, and fit a function $f(z)$ to the histogram. 
+%%\item Using this function, estimate an ``empirical null'' which is $N(\delta_0,\sigma_0^2)$. 
+%%\end{itemize}
+%%}
+
+%%
+%%\frame{
+%%\frametitle{Estimating ``Empirical Null'' P-values}
+%%To get estimates of the FDR, you need {\it P}-values again. To calculate {\it P}-values:
+%%\begin{itemize}
+%%\item Let $F$ be the cdf of a $N(\delta_0,\sigma_0^2)$ random variable. 
+%%\item Set $p^{efr}_i = 2\times(1-F(|z_i|))$.
+%%\item Using these {\it P}-values you can calculate FDR, etc. 
+%%\end{itemize}
+%%}
+
+
+
+
+\end{document}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>March 14, 2013</title>
+  <meta charset="utf-8">
+  <meta name="description" content="March 14, 2013">
+  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/zenburn.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href = "assets/css/custom.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <hgroup class="auto-fadein">
+        <h1>March 14, 2013</h1>
+        <h2>JHSPH Biostatistics 753 - Advanced Methods/Applied Statistics</h2>
+        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Mar 14</h2>
+  </hgroup>
+  <article>
+    <p><strong>Announcements</strong></p>
+
+<ol>
+<li>Happy <a href="http://en.wikipedia.org/wiki/Pi_Day">Pi Day</a>!!!</li>
+<li>Finals due next Tuesday</li>
+</ol>
+
+<p><strong>Agenda</strong></p>
+
+<p>1.Finish single testing
+2.Multiple testing</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Pro tip</h2>
+  </hgroup>
+  <article>
+    <p>Ways to come up with a new method:</p>
+
+<ul>
+<li>A new data type - new method</li>
+<li>A new data type - adapt old method</li>
+<li>An overlooked problem</li>
+<li>Changing the assumptions of a current method</li>
+<li>Generalizing a known method</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Paper of the day</h2>
+  </hgroup>
+  <article>
+    <p><a href="http://www.stat.purdue.edu/%7Edoerge/BIOINFORM.D/FALL06/Benjamini%20and%20Y%20FDR.pdf">Controlling the false discovery rate: a practical and powerful approach to multiple testing</a>
+<a href="http://www.pnas.org/content/100/16/9440.full">Statistical significance for genomewide studies</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Key statistical concepts from this term</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Organizing a data analysis</li>
+<li>What do we mean by &quot;randomness&quot;</li>
+<li>How to get data (from the web/in person)</li>
+<li>Estimating equations and least squares</li>
+<li>Sandwich estimation for variances</li>
+<li>GLMs (link functions, parametric families, iteratively re-weighted least squares)</li>
+<li>Plotting basics</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Key statistical concepts from this term</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Clustering basics (kmeans,heirarchical clustering)</li>
+<li>Smoothing (very basics)</li>
+<li>SVD</li>
+<li>Bootstrap</li>
+<li>Hypothesis testing</li>
+<li>Multiple testing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Key non-statistical concepts from this term</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Reading the literature</li>
+<li>Data analyis is not just statistics/math</li>
+<li>Data analysis is not just coding</li>
+<li>Data analysis requires careful writing/interpretation</li>
+<li><strong>You will learn a tiny fraction of what you need to know in class</strong></li>
+<li><strong>Self-starting is a hugely valued character trait in this biz</strong></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>How to think about developing a method</h2>
+  </hgroup>
+  <article>
+    <p><strong>Hopefully the in-class projects suggested</strong></p>
+
+<ul>
+<li>See some data</li>
+<li>Quantify the problem</li>
+<li>Start simple</li>
+<li>Talk to some people</li>
+<li>Write down a procedure</li>
+<li>Code it up</li>
+<li>Test it out</li>
+<li>Iterate</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Preview of next term</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>More high-dimensional stuff</li>
+<li>More smoothing</li>
+<li>Alternative uses of things like GLMs</li>
+<li>GEEs/dependent data</li>
+<li>Simulation studies/sensitivy analysis</li>
+<li>Prediction</li>
+<li>Maybe GAMs, graphical models, basics of causal stuff...</li>
+</ul>
+
+<p><a href="http://jtleek.github.com/jhsph753/">Course website</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<script src='libraries/widgets/bootstrap/js/bootstrap.min.js'></script>
+<script>  
+$(function (){ 
+  $("#example").popover(); 
+  $("[rel='tooltip']").tooltip(); 
+});  
+</script>  
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>

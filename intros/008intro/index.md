@@ -14,7 +14,7 @@ mode        : selfcontained # {standalone, draft}
 
 __Announcements__
 
-1. Data analysis assignments
+1. I suck, hopefully less so on Thursday
 2. Next week - guest lecturers
 
 __Agenda__
